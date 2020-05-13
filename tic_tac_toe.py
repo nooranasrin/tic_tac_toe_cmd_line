@@ -49,12 +49,15 @@ class TicTacToe:
         self.is_won = self.is_won_the_game()
         self.chances += 1
 
-    def play(self):
-        if self.is_won or self.chances > 9:
-            return f'{self.get_player_name()} won the game🥳' if self.is_won else 'draw🙁'
+    def change_settings_for_next_turn(self):
         print(self.get_board())
         self.current_player = self.change_player()
         print(f'player : {self.get_player_name()}')
+
+    def play(self):
+        if self.is_won or self.chances > 9:
+            return f'{self.get_player_name()} won the game🥳' if self.is_won else 'draw🙁'
+        self.change_settings_for_next_turn()
         position = get_position()
         is_position_valid = self.is_valid_position(position - 1)
         if is_position_valid:
