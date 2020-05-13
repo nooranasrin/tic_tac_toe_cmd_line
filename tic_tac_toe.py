@@ -66,12 +66,3 @@ class TicTacToe:
             print('\nThe entered position is not valid! Please enter a valid position')
             self.current_player = self.change_player()
         return self.play()
-
-
-def main():
-    tic_tac_toe = TicTacToe()
-    game_status = tic_tac_toe.play()
-    print(game_status)
-
-
-main()
