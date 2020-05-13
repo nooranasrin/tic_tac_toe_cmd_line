@@ -31,12 +31,23 @@ class TicTacToe:
     def is_valid_position(self, position):
         return position not in self.entered_positions and 0 <= position < 9
 
+    def is_mine(self, condition):
+        symbol = self.symbols[self.current_player]
+        is_winner = self.rows[condition[0] - 1] == symbol
+        is_winner = is_winner and self.rows[condition[1] - 1] == symbol
+        return is_winner and self.rows[condition[2] - 1] == symbol
+
     def is_won_the_game(self):
         for condition in self.win_conditions:
-            symbol = self.symbols[self.current_player]
-            if self.rows[condition[0] - 1] == symbol and self.rows[condition[1] - 1] == symbol and self.rows[condition[2] - 1] == symbol:
+            if self.is_mine(condition):
                 return True
         return False
+
+    def update_game(self, position):
+        self.entered_positions.append(position - 1)
+        self.rows[position - 1] = self.symbols[self.current_player]
+        self.is_won = self.is_won_the_game()
+        self.chances += 1
 
     def play(self):
         if self.chances > 9:
@@ -49,15 +60,11 @@ class TicTacToe:
         position = get_position()
         is_position_valid = self.is_valid_position(position - 1)
         if is_position_valid:
-            self.entered_positions.append(position - 1)
-            self.rows[position - 1] = self.symbols[self.current_player]
-            self.is_won = self.is_won_the_game()
-            self.chances += 1
-            return self.play()
+            self.update_game(position)
         else:
             print('\nThe entered position is not valid! Please enter a valid position')
             self.current_player = self.change_player()
-            return self.play()
+        return self.play()
 
 
 def main():
